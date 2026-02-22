@@ -16,7 +16,7 @@ function isDateDisabled(date: Date, cartTotal: number): boolean {
   today.setHours(0, 0, 0, 0);
   if (date < today) return true;
   const day = date.getDay();
-  if (cartTotal > 900) return day === 6;
+  if (cartTotal > 1000) return day === 6;
   return day !== 4 && day !== 5;
 }
 
@@ -95,7 +95,7 @@ export default function OrderPage() {
           <div className="border-t pt-4 flex justify-between items-center font-bold text-lg mb-5">
             <span>{o.total}</span><span>₪{total}</span>
           </div>
-          {total > 900 ? (
+          {total > 1000 ? (
             <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
               <p className="font-semibold mb-1">{o.flex_title}</p><p>{o.flex_desc}</p>
             </div>

@@ -28,7 +28,7 @@ export default function ProductCard({ product }: { product: Product }) {
             {product.pricePerKg ? (
               <>
                 <p className="font-bold text-[#1C1C1C]">₪{product.pricePerKg}<span className="text-xs font-normal text-gray-400">/kg</span></p>
-                <p className="text-xs text-gray-400">from ₪{product.price}</p>
+                <p className="text-xs text-gray-400">min. {product.minKg} kg</p>
               </>
             ) : (
               <p className="font-bold text-[#1C1C1C]">₪{product.price}</p>

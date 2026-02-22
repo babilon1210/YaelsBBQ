@@ -1,7 +1,9 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Product, getLineItemPrice } from '@/lib/products';
+
+const STORAGE_KEY = 'yaels-bbq-cart';
 
 export type CartItem = { product: Product; quantity: number };
 
@@ -22,6 +24,25 @@ const CartContext = createContext<CartContextType | null>(null);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+
+  // Restore cart from localStorage on first load
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved) as CartItem[];
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        if (Array.isArray(parsed) && parsed.length > 0) setItems(parsed);
+      }
+    } catch { /* ignore corrupted data */ }
+  }, []);
+
+  // Persist cart to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    } catch { /* ignore quota errors */ }
+  }, [items]);
 
   const addItem = (product: Product) => {
     setItems(prev => {

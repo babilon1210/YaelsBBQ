@@ -51,7 +51,9 @@ export default function CartDrawer() {
                       <button onClick={() => updateQuantity(product.id, quantity - 1)} className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors">
                         {quantity === 1 ? <Trash2 size={12} /> : <Minus size={12} />}
                       </button>
-                      <span className="w-4 text-center text-sm font-medium">{quantity}</span>
+                      <span className="w-4 text-center text-sm font-medium">
+                        {product.minKg ? product.minKg + quantity - 1 : quantity}
+                      </span>
                       <button onClick={() => updateQuantity(product.id, quantity + 1)} className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors">
                         <Plus size={12} />
                       </button>
@@ -65,7 +67,7 @@ export default function CartDrawer() {
 
         {items.length > 0 && (
           <div className="border-t px-6 py-5 space-y-4">
-            {total > 900 && (
+            {total > 1000 && (
               <p className="text-xs text-amber-800 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2.5">{t.cart.flexible}</p>
             )}
             <div className="flex items-center justify-between font-semibold text-base">
